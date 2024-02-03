@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Object Literal</title>
+     </head>
+     <body>
+          
+
+          <script type="text/javascript">
+               // => Object
+               let person1 = {
+                    name: "Aung Aung",
+                    age:20,
+                    gender:"male"
+               };
+               console.log(person1); // Object {name: 'Aung Aung', age: 20, gender: 'male'}
+               console.log(person1.name); // Aung Aung
+               console.log(person1["name"]); // Aung Aung
+
+               person1.city = "Yangon";
+               console.log(person1);              // Object {name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon'}
+
+               let person2 = person1;
+               console.log(person2);              // {name: 'Aung Aung', age: 20, gender: 'male', city: 'Yangon'}
+               person2.hobby = "sport";      
+               person2.age = 30;
+               console.log(person1);              // {name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+               console.log(person2);              // {name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+               
+               // - person2 addition and overwrite will effect person1
+
+               let person3 = Object.freeze(person1);
+               console.log(person3);              // {name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+               person3.phone = "0912345";
+               person3.age = 40;
+               console.log(person1);              // {name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+               console.log(person2);              // {name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+               console.log(person3);              // {name: 'Aung Aung', age: 30, gender: 'male', city: 'Yangon', hobby: 'sport'}
+               console.log(person1.name);
+               console.log(person1["name"]);
+               // person3 addition and overwrite will not affect person1
+               // person1 can't be made any modification, it is fix.
+               // it can only output value.
+
+               const employees = {
+                    name: "yu yu",
+                    position: "graphic designer",
+                    salary:500000
+               };
+               // console.log(employees.name);
+               const {name,salary} = employees;
+               console.log(name);
+               console.log(salary);
+               // - multi variables declare at once to get object value
+               //        name = employee.name
+               //        salary = employee.salary
+               // - variable name and object perperty must be same 
+               // - object property can't be accessed if variable didn't declare
+
+               const employers = {
+                    fullname : "su su",
+                    company : "abc co.,ltd",
+                    location : "yangon",
+                    posts : {
+                         officestaff:{
+                              gender:"female",
+                              salary:600000
+                         },
+                         driver:{
+                              gender:"male",
+                              salary:300000
+                         },
+                    },
+                    links:{
+                         social:{
+                              gmail : "admin@abc.com",
+                              facebook:"https://faebook.com/abccompany"
+                         }
+                    }
+               }
+               // console.log(employers);
+               const{fullname,company,posts} = employers;
+               console.log(fullname); // su su
+               console.log(company); // abc co.,ltd
+               console.log(posts.officestaff.gender,posts["officestaff"]["salary"]); // female 600000
+               console.log(posts.driver.gender,posts["driver"]["salary"]); // male 300000
+               
+               // -Object can hold every data types.
+               // -Object can have nested objects. 
+
+               // const {gmail,facebook} = employers.links.social;
+               // console.log(gmail);
+               // console.log(facebook);
+
+               // =>Alias
+               const {gmail:letter,facebook:status} = employers.links.social;
+               // console.log(gmail); //  error l4objectliteral.html:96 Uncaught ReferenceError: gmail is not defined
+               // console.log(facebook); // error l4objectliteral.html:96 Uncaught ReferenceError: facebook is not defined
+               console.log(letter);
+               console.log(status);
+
+               const configs = {
+                    width:100,
+                    color:"steelblue"
+               };
+               const {
+                    width,
+                    height = 500,
+                    color = 'black',
+                    margin = "10px"} = configs;
+               console.log(width); // 100
+               console.log(color); // steelblue
+               console.log(height); // 500
+               console.log(margin); // 10px
+               // default value of variable
+
+
+               const {bg:background="white",p:padding="10px",flex:flexbox} = {bg:"black"};
+               // console.log(bg); // error
+               // console.log(p); // error
+               console.log(background); // black
+               console.log(padding); // 10px
+               // console.log(flex); // error
+               console.log(flexbox); // undefined
+
+               function exchangerage(amount){
+                    const rates = {
+                         mmk: amount * 3000,
+                         thb: amount * 40,
+                         sgd: amount * 1.35
+                    };
+                    return rates;
+               }   
+               const currency = exchangerage(10); // 10usd
+               console.log(currency);
+               console.log(currency.mmk); // 30000
+               console.log(currency.thb); // 400
+
+               const {mmk,thb,sgd} = exchangerage(10);
+               console.log(mmk); // 30000
+               console.log(thb); // 400
+               console.log(sgd); // 13.5
+
+               let obj = {
+                    total:1000,
+                    tax:5,
+                    servicefee:100
+               };
+               function grandtotal1(objval){
+                    const result = objval.total+(objval.total/objval.tax)+objval.servicefee;
+                    return result;
+               }
+               console.log(grandtotal1(obj)); // 1300
+               // console.log(grandtotal1()); // error -  because it retrieve property value from empty
+
+               function grandtotal2(objval={}){
+                    const result = objval.total+(objval.total/objval.tax)+objval.servicefee;
+                    return result;
+               }
+               console.log(grandtotal2()); // NaN //  cause it is empty object
+          
+               
+               function grandtotal3({total,tax,servicefee}){
+                    const result = total+(total/tax)+servicefee;
+                    return result;
+               }
+               console.log(grandtotal3({total:2000,tax:5,servicefee:100})); // 2500
+               console.log(grandtotal3(obj)); // 1300
+               console.log(grandtotal3({total:2000,servicefee:100})); // NaN
+               // 1. accept object as single parameter
+               // 2. define variable as from object
+
+               // const {total,tax,servicefee} = {total:2000,tax:5,servicefee:100};
+               // console.log(total);
+               // console.log(tax);
+               // console.log(servicefee);
+               // *can directly get object property 
+
+               function grandtotal4({total=1000,tax=5,servicefee=100}){
+                    const result = total+(total/tax)+servicefee;
+                    return result;
+               }
+               console.log(grandtotal4({total:3000,tax:5,servicefee:100})); // 3700
+               console.log(grandtotal4({total:3000,servicefee:200})); // 3800
+               console.log(grandtotal4({servicefee:200})); // 1400
+               // console.log(grandtotal4()); // error
+               console.log(grandtotal4({})); // 1300
+               // -default  variables
+               //*need to pass an empty object
+
+               function grandtotal5({total=1000,tax=5,servicefee=100}={}){
+                    const result = total+(total/tax)+servicefee;
+                    return result;
+               }
+               console.log(grandtotal5({total:3000,tax:5,servicefee:100})); // 3700
+               console.log(grandtotal5({total:3000,servicefee:200})); // 3800
+               console.log(grandtotal5()); // 1300
+               // -default parameter and variable
+     </script>
+     </body>
+</html>

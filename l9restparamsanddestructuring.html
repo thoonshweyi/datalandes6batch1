@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Rest Params & Destructuring</title>
+     </head>
+     <body>
+          
+
+          <script type="text/javascript">
+               // => Array Destructuring
+               const countries = ["Myanmar","Thailand","Srilanka","Indonesia"];
+               console.log(countries[0],countries[1],countries[1]); // Myanmar Thailand Srilanka
+
+               const [mm,th,slk,indo] = countries;
+               console.log(mm,th,slk,indo); // Myanmar Thailand Srilanka Indonesia
+
+               const [,country1,,country4] = countries;
+               console.log(country1); // Thailand
+               console.log(country4); // Indonesia
+
+               // Destructuring Assignment
+               const [fiat,...coin] = countries;
+               console.log(fiat); // Myanmar
+               console.log(coin); // ) ['Thailand', 'Srilanka', 'Indonesia']
+          
+               // Object Destructuring
+               const persons = {
+                    firstname:"HOney Nyway",
+                    lastname: "Oo",
+                    age:22,
+                    gender:"Female",
+                    hascar:true,
+                    city:"Yangon",
+                    country:"Myanmar"
+               }
+               console.log(persons.firstname,persons.lastname,persons.gender,persons.city);
+
+               const {firstname,lastname,city} = persons;
+               console.log(firstname,lastname,city); // Honey Nyway Oo Yangon
+               
+               const {gender:sex,age:old} = persons;
+               // console.log(gender,age); // l9restparamsanddestructuring.html:42 Uncaught ReferenceError: gender is not defined
+               console.log(sex,old); // Female 22
+
+               const {country,hascar,...other} = persons;
+               console.log(country); // Myannar
+               console.log(hascar); // true
+               console.log(other); // {firstname: 'HOney Nyway', lastname: 'Oo', age: 22, gender: 'Female', city: 'Yangon'}
+          
+               let employes = [
+                    {
+                         firstname:"Hla Nu",
+                         lastname:"Htun"
+                    },
+                    (nickname)=>{
+                         return `You can call me ${nickname}`;
+                    }
+               ];
+               console.log(employes);
+               console.log(employes[0]);
+               console.log(employes[1]("Ma Ma"));
+
+               let [nickname,setname] = employes;
+               console.log(nickname); // {firstname: 'Hla Nu', lastname: 'Htun'}
+               console.log(nickname.firstname,nickname.lastname); // Hla Nu Htun
+               console.log(setname("Nu Nu")); // You can call me Nu Nu
+                    
+               //=> Nested Destructuring
+                    const staffs = [
+                         {
+                              name:"aung aung",
+                              position:"representative",
+                              department:"sales",
+                              salary:200000
+                         },
+                         {
+                              name:"tun tun",
+                              position:"supervisor",
+                              department:"sales",
+                              salary:300000
+                         },
+                         {
+                              name:"su su",
+                              position:"manager",
+                              department:"sales",
+                              salary:500000
+                         },
+                         {
+                              name:"nu nu",
+                              position:"finance",
+                              department:"finance",
+                              salary:250000
+                         },
+                         {
+                              name:"yu yu",
+                              position:"finance",
+                              department:"finance",
+                              salary:250000
+                         },
+
+                    ];
+
+                    // let {name} = staffs; // undefined 
+                    // const [name] = staffs; // // {name: 'aung aung', position: 'representative', department: 'sales', salary: 200000}
+                    // const [{name}] = staffs; // aung aung
+                    // const [,{name}] = staffs; // tun tun
+                    // const [,,{name}] = staffs; // su su
+                    const [,,,{name}] = staffs; // nu nu
+                    console.log(name);
+
+                    const [,,,{position:title}] = staffs;
+                    // console.log(position); // l9restparamsanddestructuring.html:112 Uncaught ReferenceError: position is not defined
+                    console.log(title); // accountant
+          </script>
+     </body>
+</html>
+
+<!-- 8ND -->
